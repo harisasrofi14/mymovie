@@ -1,3 +1,15 @@
 <resources>
     <string name="app_name">MyMovie</string>
+    <string name="category">Category</string>
+    <string name="overview">Overview</string>
+    <string name="user_review">User Review</string>
+    <string name="content_desc_button_favorite">Button Favorite</string>
+    <string name="release_date">Release Date</string>
+
+
+    <string-array name="category_array">
+        <item>Popular</item>
+        <item>Top Rated</item>
+        <item>Now Playing</item>
+    </string-array>
 </resources>
