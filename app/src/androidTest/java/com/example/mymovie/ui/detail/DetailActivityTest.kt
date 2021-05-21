@@ -10,7 +10,7 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.example.mymovie.R
-import com.example.mymovie.core.utils.EspressoIdlingResource
+import com.example.core.utils.EspressoIdlingResource
 import com.example.mymovie.ui.home.MainActivity
 import org.junit.After
 import org.junit.Before

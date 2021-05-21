@@ -1,51 +1,53 @@
 package com.example.mymovie.ui.home
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.core.data.Resource
+import com.example.core.domain.model.Movie
 import com.example.mymovie.R
-import com.example.mymovie.core.data.Resource
-import com.example.mymovie.core.domain.model.Movie
-import com.example.mymovie.ui.ViewModelFactory
+import com.example.mymovie.databinding.ActivityMainBinding
 import com.example.mymovie.ui.adapter.MovieAdapter
 import com.example.mymovie.ui.detail.DetailActivity
-import com.example.mymovie.ui.favorite.FavoriteActivity
-import kotlinx.android.synthetic.main.activity_main.*
+import org.koin.android.viewmodel.ext.android.viewModel
 
 
 class MainActivity : AppCompatActivity() {
 
     companion object {
-        val popular = "popular"
-        val topRated = "top_rated"
-        val nowPlaying = "now_playing"
+        const val popular = "popular"
+        const val topRated = "top_rated"
+        const val nowPlaying = "now_playing"
     }
 
-    private lateinit var movieViewModel: MovieViewModel
+    private val movieViewModel: MovieViewModel by viewModel()
+    private lateinit var binding: ActivityMainBinding
+    private lateinit var myBottomSheetDialogFragment : MyBottomSheetDialogFragment
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         supportActionBar?.title = "Movies App"
-        val factory = ViewModelFactory.getInstance(this)
-        movieViewModel = ViewModelProvider(this, factory)[MovieViewModel::class.java]
 
         val movieAdapter = MovieAdapter()
 
-        val myBottomSheetDialogFragment = MyBottomSheetDialogFragment()
-        buttonBottomSheetPersistent.setOnClickListener {
+        myBottomSheetDialogFragment = MyBottomSheetDialogFragment()
+        binding.buttonBottomSheetPersistent.setOnClickListener {
             myBottomSheetDialogFragment.apply {
                 show(supportFragmentManager, tag)
             }
 
         }
-        myBottomSheetDialogFragment.setOnItemClickCallback(object : MyBottomSheetDialogFragment.OnItemClickCallback {
+        myBottomSheetDialogFragment.setOnItemClickCallback(object :
+            MyBottomSheetDialogFragment.OnItemClickCallback {
             override fun onItemClicked(data: String) {
                 myBottomSheetDialogFragment.dismiss()
 
@@ -53,20 +55,20 @@ class MainActivity : AppCompatActivity() {
                     if (movies != null) {
                         when (movies) {
                             is Resource.Loading -> {
-                                progress_circular.visibility = View.VISIBLE
-                                rv_movie.visibility = View.GONE
+                                binding.progressCircular.visibility = View.VISIBLE
+                                binding.rvMovie.visibility = View.GONE
                             }
                             is Resource.Success -> {
                                 movies.data?.let { movieAdapter.setData(it) }
-                                progress_circular.visibility = View.GONE
-                                rv_movie.visibility = View.VISIBLE
+                                binding.progressCircular.visibility = View.GONE
+                                binding.rvMovie.visibility = View.VISIBLE
                             }
                             is Resource.Error -> {
-                                progress_circular.visibility = View.GONE
+                                binding.progressCircular.visibility = View.GONE
                                 Toast.makeText(
-                                        applicationContext,
-                                        movies.message,
-                                        Toast.LENGTH_SHORT
+                                    applicationContext,
+                                    movies.message,
+                                    Toast.LENGTH_SHORT
                                 ).show()
                             }
                         }
@@ -77,7 +79,7 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        with(rv_movie) {
+        with(binding.rvMovie) {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
             adapter = movieAdapter
@@ -103,8 +105,8 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.mm_favorite -> {
-                val intent = Intent(this, FavoriteActivity::class.java)
-                startActivity(intent)
+                val uri = Uri.parse("mymovie://favorite")
+                startActivity(Intent(Intent.ACTION_VIEW, uri))
                 true
             }
             else -> super.onOptionsItemSelected(item)

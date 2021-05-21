@@ -2,8 +2,8 @@ package com.example.mymovie.ui.detail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asLiveData
-import com.example.mymovie.core.domain.model.Movie
-import com.example.mymovie.core.domain.usecase.MovieUseCase
+import com.example.core.domain.model.Movie
+import com.example.core.domain.usecase.MovieUseCase
 
 
 class DetailMovieViewModel(private val movieUseCase: MovieUseCase) : ViewModel() {

@@ -4,9 +4,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.core.domain.model.Review
 import com.example.mymovie.R
-import com.example.mymovie.core.domain.model.Review
-import kotlinx.android.synthetic.main.item_review.view.*
+import com.example.mymovie.databinding.ItemReviewBinding
+
 
 class ReviewAdapter : RecyclerView.Adapter<ReviewAdapter.ViewHolder>() {
 
@@ -21,7 +22,7 @@ class ReviewAdapter : RecyclerView.Adapter<ReviewAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(viewGroup.context)
-                .inflate(R.layout.item_review, viewGroup, false)
+            .inflate(R.layout.item_review, viewGroup, false)
         return ViewHolder(view)
     }
 
@@ -33,12 +34,12 @@ class ReviewAdapter : RecyclerView.Adapter<ReviewAdapter.ViewHolder>() {
         return mData.size
     }
 
-
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val binding = ItemReviewBinding.bind(itemView)
         fun bind(review: Review) {
-            with(itemView) {
-                tv_author.text = review.author
-                tv_content.text = review.content
+            with(binding) {
+                tvAuthor.text = review.author
+                tvContent.text = review.content
             }
         }
     }

@@ -5,40 +5,40 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.ListView
 import com.example.mymovie.R
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.bottom_sheet_modal.*
 
 
 class MyBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     private var onItemClickCallback: OnItemClickCallback? = null
-
+    private var listViewOptions: ListView? = null
 
     fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback) {
         this.onItemClickCallback = onItemClickCallback
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater,
-            container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.bottom_sheet_modal, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
+        listViewOptions = view?.findViewById(R.id.listViewOptions)
 
         val categoryArray = resources.getStringArray(R.array.category_array)
 
-        listViewOptions.adapter = ArrayAdapter(
-                requireContext(),
-                android.R.layout.simple_list_item_1,
-                categoryArray
+        listViewOptions?.adapter = ArrayAdapter(
+            requireContext(),
+            android.R.layout.simple_list_item_1,
+            categoryArray
         )
-        listViewOptions.setOnItemClickListener { parent, _, position, _ ->
+        listViewOptions?.setOnItemClickListener { parent, _, position, _ ->
             val element = parent.getItemIdAtPosition(position).toInt()
             var category = ""
             when (element) {
@@ -58,5 +58,15 @@ class MyBottomSheetDialogFragment : BottomSheetDialogFragment() {
 
     interface OnItemClickCallback {
         fun onItemClicked(data: String)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        onItemClickCallback = null
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        onItemClickCallback = null
     }
 }

@@ -8,8 +8,8 @@ import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import com.example.core.utils.EspressoIdlingResource
 import com.example.mymovie.R
-import com.example.mymovie.core.utils.EspressoIdlingResource
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -36,7 +36,7 @@ class MainActivityTest {
         onView(withId(R.id.buttonBottomSheetPersistent)).perform(ViewActions.click())
         onView(withText("Popular")).perform(ViewActions.click())
         onView(withId(R.id.rv_movie))
-                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+            .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
     }
 
     @Test
@@ -44,7 +44,7 @@ class MainActivityTest {
         onView(withId(R.id.buttonBottomSheetPersistent)).perform(ViewActions.click())
         onView(withText("Top Rated")).perform(ViewActions.click())
         onView(withId(R.id.rv_movie))
-                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+            .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
     }
 
     @Test
@@ -52,7 +52,7 @@ class MainActivityTest {
         onView(withId(R.id.buttonBottomSheetPersistent)).perform(ViewActions.click())
         onView(withText("Now Playing")).perform(ViewActions.click())
         onView(withId(R.id.rv_movie))
-                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+            .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
     }
 
 

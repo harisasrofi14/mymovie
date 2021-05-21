@@ -5,10 +5,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.core.domain.model.Movie
+import com.example.core.utils.DateUtils
 import com.example.mymovie.R
-import com.example.mymovie.core.domain.model.Movie
-import com.example.mymovie.core.utils.DateUtils
-import kotlinx.android.synthetic.main.item_list_movie.view.*
+import com.example.mymovie.databinding.ItemListMovieBinding
+
 
 class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
     private val mData = ArrayList<Movie>()
@@ -43,18 +44,19 @@ class MovieAdapter : RecyclerView.Adapter<MovieAdapter.ViewHolder>() {
     }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val binding = ItemListMovieBinding.bind(itemView)
         fun bind(movie: Movie) {
-            with(itemView) {
+            with(binding) {
                 Glide.with(itemView.context)
                     .load("https://image.tmdb.org/t/p/w500" + movie.posterPath)
                     .fitCenter()
-                    .into(iv_poster)
-                tv_title.text = movie.title
+                    .into(ivPoster)
+                tvTitle.text = movie.title
                 itemView.setOnClickListener {
                     onItemClickCallback?.onItemClicked(movie)
                 }
-                tv_release_date.text = DateUtils.dateFormat(movie.releaseDate)
-                tv_overview.text = movie.overview
+                tvReleaseDate.text = DateUtils.dateFormat(movie.releaseDate)
+                tvOverview.text = movie.overview
             }
         }
     }
