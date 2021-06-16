@@ -1,5 +1,6 @@
 package com.example.core.di
 
+
 import androidx.room.Room
 import com.example.core.data.MovieRepository
 import com.example.core.data.source.local.LocalDataSource
@@ -8,12 +9,12 @@ import com.example.core.data.source.remote.RemoteDataSource
 import com.example.core.data.source.remote.network.ApiService
 import com.example.core.domain.repository.IMovieRepository
 import com.example.core.utils.AppExecutors
-import net.sqlcipher.database.SQLiteDatabase
-import net.sqlcipher.database.SupportFactory
+import net.sqlcipher.database.*
 import okhttp3.CertificatePinner
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
+
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -29,6 +30,8 @@ val databaseModule = module {
             MovieDatabase::class.java, "movie_database"
         ).fallbackToDestructiveMigration()
             .openHelperFactory(factory).build()
+
+
     }
 }
 

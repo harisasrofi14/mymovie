@@ -2,6 +2,7 @@ package com.example.favorite
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.core.domain.model.Movie
@@ -27,10 +28,13 @@ class FavoriteActivity : AppCompatActivity() {
 
         favoriteMovieViewModel.getFavoriteMovie().observe(this) { favoriteMovies ->
             favoriteMovies.let { movieAdapter.setData(it) }
+            if (favoriteMovies.isEmpty()) {
+                binding.animation.visibility = View.VISIBLE
+            }
         }
 
 
-        with(binding.rvFavoriteMovie) {
+        with(binding.rvFavorite) {
             layoutManager = LinearLayoutManager(context)
             setHasFixedSize(true)
             adapter = movieAdapter
