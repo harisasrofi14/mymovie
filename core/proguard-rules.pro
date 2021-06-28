@@ -32,3 +32,5 @@
 -keepclassmembers,allowshrinking,allowobfuscation interface * {
 @retrofit2.http.* <methods>;
 }
+
+-dontwarn retrofit2.**
