@@ -21,14 +21,12 @@ import org.koin.android.viewmodel.ext.android.viewModel
 class MainActivity : AppCompatActivity() {
 
     companion object {
-        const val popular = "popular"
-        const val topRated = "top_rated"
         const val nowPlaying = "now_playing"
     }
 
     private val movieViewModel: MovieViewModel by viewModel()
     private lateinit var binding: ActivityMainBinding
-    private lateinit var myBottomSheetDialogFragment : MyBottomSheetDialogFragment
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,45 +36,29 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.title = "Movies App"
 
         val movieAdapter = MovieAdapter()
-
-        myBottomSheetDialogFragment = MyBottomSheetDialogFragment()
-        binding.buttonBottomSheetPersistent.setOnClickListener {
-            myBottomSheetDialogFragment.apply {
-                show(supportFragmentManager, tag)
-            }
-
-        }
-        myBottomSheetDialogFragment.setOnItemClickCallback(object :
-            MyBottomSheetDialogFragment.OnItemClickCallback {
-            override fun onItemClicked(data: String) {
-                myBottomSheetDialogFragment.dismiss()
-
-                movieViewModel.getMoviesByCategory(data).observe(this@MainActivity, { movies ->
-                    if (movies != null) {
-                        when (movies) {
-                            is Resource.Loading -> {
-                                binding.progressCircular.visibility = View.VISIBLE
-                                binding.rvMovie.visibility = View.GONE
-                            }
-                            is Resource.Success -> {
-                                movies.data?.let { movieAdapter.setData(it) }
-                                binding.progressCircular.visibility = View.GONE
-                                binding.rvMovie.visibility = View.VISIBLE
-                            }
-                            is Resource.Error -> {
-                                binding.progressCircular.visibility = View.GONE
-                                Toast.makeText(
-                                    applicationContext,
-                                    movies.message,
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        }
+        movieViewModel.getMoviesByCategory(nowPlaying).observe(this@MainActivity, { movies ->
+            if (movies != null) {
+                when (movies) {
+                    is Resource.Loading -> {
+                        binding.progressCircular.visibility = View.VISIBLE
+                        binding.rvMovie.visibility = View.GONE
                     }
-
-                })
-
+                    is Resource.Success -> {
+                        movies.data?.let { movieAdapter.setData(it) }
+                        binding.progressCircular.visibility = View.GONE
+                        binding.rvMovie.visibility = View.VISIBLE
+                    }
+                    is Resource.Error -> {
+                        binding.progressCircular.visibility = View.GONE
+                        Toast.makeText(
+                                applicationContext,
+                                movies.message,
+                                Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
             }
+
         })
 
         with(binding.rvMovie) {

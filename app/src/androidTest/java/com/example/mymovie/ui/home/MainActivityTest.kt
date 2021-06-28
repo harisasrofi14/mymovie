@@ -1,12 +1,13 @@
 package com.example.mymovie.ui.home
 
+import androidx.recyclerview.widget.RecyclerView
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.IdlingRegistry
 import androidx.test.espresso.action.ViewActions
 import androidx.test.espresso.assertion.ViewAssertions
+import androidx.test.espresso.contrib.RecyclerViewActions
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.withId
-import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import com.example.core.utils.EspressoIdlingResource
 import com.example.mymovie.R
@@ -32,28 +33,15 @@ class MainActivityTest {
     var activityRule = ActivityScenarioRule(MainActivity::class.java)
 
     @Test
-    fun loadPopularMovie() {
-        onView(withId(R.id.buttonBottomSheetPersistent)).perform(ViewActions.click())
-        onView(withText("Popular")).perform(ViewActions.click())
+    fun loadMovie() {
         onView(withId(R.id.rv_movie))
-            .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+                .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
+        onView(withId(R.id.rv_movie)).perform(
+                RecyclerViewActions.actionOnItemAtPosition<RecyclerView.ViewHolder>(
+                        0,
+                        ViewActions.click()
+                )
+        )
     }
-
-    @Test
-    fun loadTopRatedMovie() {
-        onView(withId(R.id.buttonBottomSheetPersistent)).perform(ViewActions.click())
-        onView(withText("Top Rated")).perform(ViewActions.click())
-        onView(withId(R.id.rv_movie))
-            .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
-    }
-
-    @Test
-    fun loadNowPlayingMovie() {
-        onView(withId(R.id.buttonBottomSheetPersistent)).perform(ViewActions.click())
-        onView(withText("Now Playing")).perform(ViewActions.click())
-        onView(withId(R.id.rv_movie))
-            .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
-    }
-
 
 }

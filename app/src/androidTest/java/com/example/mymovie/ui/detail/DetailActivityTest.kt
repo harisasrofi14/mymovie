@@ -35,8 +35,6 @@ class DetailActivityTest {
 
     @Test
     fun loadDetailMovies() {
-        Espresso.onView(withId(R.id.buttonBottomSheetPersistent)).perform(ViewActions.click())
-        Espresso.onView(ViewMatchers.withText("Popular")).perform(ViewActions.click())
         Espresso.onView(withId(R.id.rv_movie))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
         Espresso.onView(withId(R.id.rv_movie)).perform(
@@ -53,8 +51,6 @@ class DetailActivityTest {
 
     @Test
     fun setFavoriteMovie() {
-        Espresso.onView(withId(R.id.buttonBottomSheetPersistent)).perform(ViewActions.click())
-        Espresso.onView(ViewMatchers.withText("Popular")).perform(ViewActions.click())
         Espresso.onView(withId(R.id.rv_movie))
                 .check(ViewAssertions.matches(ViewMatchers.isDisplayed()))
         Espresso.onView(withId(R.id.rv_movie)).perform(
