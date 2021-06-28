@@ -34,3 +34,4 @@
 }
 
 -dontwarn retrofit2.**
+-ignorewarnings
