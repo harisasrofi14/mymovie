@@ -35,4 +35,3 @@
 
 
 -dontwarn retrofit2.KotlinExtensions
--dontwarn retrofit2.KotlinExtensions$*
