@@ -25,8 +25,8 @@
 # EnclosingMethod is required to use InnerClasses.
 -keepattributes Signature, InnerClasses, EnclosingMethod
 
-# Retrofit does reflection on method and parameter annotations.
--keepattributes RuntimeVisibleAnnotations, RuntimeVisibleParameterAnnotations
+## Retrofit does reflection on method and parameter annotations.
+#-keepattributes RuntimeVisibleAnnotations, RuntimeVisibleParameterAnnotations
 
 # Retain service method parameters when optimizing.
 -keepclassmembers,allowshrinking,allowobfuscation interface * {
@@ -35,3 +35,4 @@
 
 
 -dontwarn retrofit2.KotlinExtensions
+-dontwarn retrofit2.KotlinExtensions$*
