@@ -23,16 +23,16 @@
 ##---------------Begin: proguard configuration for Retrofit ----------
 # Retrofit does reflection on generic parameters. InnerClasses is required to use Signature and
 # EnclosingMethod is required to use InnerClasses.
--keepattributes Signature, InnerClasses, EnclosingMethod
-
-## Retrofit does reflection on method and parameter annotations.
-#-keepattributes RuntimeVisibleAnnotations, RuntimeVisibleParameterAnnotations
-
-# Retain service method parameters when optimizing.
--keepclassmembers,allowshrinking,allowobfuscation interface * {
-@retrofit2.http.* <methods>;
-}
-
-
--dontwarn retrofit2.KotlinExtensions
--dontwarn retrofit2.KotlinExtensions$*
+#-keepattributes Signature, InnerClasses, EnclosingMethod
+#
+### Retrofit does reflection on method and parameter annotations.
+##-keepattributes RuntimeVisibleAnnotations, RuntimeVisibleParameterAnnotations
+#
+## Retain service method parameters when optimizing.
+#-keepclassmembers,allowshrinking,allowobfuscation interface * {
+#@retrofit2.http.* <methods>;
+#}
+#
+#
+#-dontwarn retrofit2.KotlinExtensions
+#-dontwarn retrofit2.KotlinExtensions$*
